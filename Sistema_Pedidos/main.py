@@ -13,6 +13,7 @@ def ejecutar_app():
 
     print("---")
     print(generar_estadisticas())
+    
 
 if __name__ == "__main__":
     ejecutar_app()
