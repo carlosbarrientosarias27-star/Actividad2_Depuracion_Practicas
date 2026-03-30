@@ -7,7 +7,7 @@ def test_ejecutar_salir_inmediato():
     # Simulamos que el usuario escribe '3' directamente
     with patch('main.input', return_value='3'):
         # Si no termina, el test se quedaría en un bucle infinito
-        main.ejecutar() 
+        main.ejecutar_app() 
 
 def test_ejecutar_opcion_estadisticas():
     """Verifica que la opción 2 llame a generar_estadisticas."""
@@ -16,7 +16,7 @@ def test_ejecutar_opcion_estadisticas():
          patch('historial.generar_estadisticas') as mock_est:
         
         mock_est.return_value = "Estadísticas de prueba"
-        main.ejecutar()
+        main.ejecutar_app()
         
         mock_est.assert_called_once()
 
@@ -32,7 +32,7 @@ def test_ejecutar_flujo_pedido_completo():
     with patch('main.input', side_effect=inputs), \
          patch('pedidos.procesar_nuevo_pedido') as mock_procesar:
         
-        main.ejecutar()
+        main.ejecutar_app()
         
         # Verificamos que se llamó a la lógica de pedidos con los datos limpios
         mock_procesar.assert_called_once_with('Carlos', ['cafe', 'te'])
@@ -41,4 +41,4 @@ def test_ejecutar_flujo_pedido_completo():
 def test_ejecutar_opcion_no_valida(mock_input):
     """Verifica que el programa no rompa ante una opción no reconocida."""
     # Simplemente nos aseguramos de que termine sin excepciones
-    main.ejecutar()
+    main.ejecutar_app()
