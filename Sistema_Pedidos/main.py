@@ -28,6 +28,7 @@ def ejecutar_app():
         else:
             # Maneja el caso de 'opcion_invalida' del test
             print("Opción no válida")
+            
 
 if __name__ == "__main__":
     ejecutar_app()
