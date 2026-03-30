@@ -35,8 +35,8 @@ jobs:
       # 5. Tests unitarios y Cobertura
       - name: Ejecutar tests y medir cobertura
         run: |
-          # Ejecutamos pytest apuntando a la subcarpeta correcta
-          # --cov=Sistema_Pedidos indica que mida la cobertura solo de tu código fuente
+          # Añadimos la carpeta actual al PATH de Python para que encuentre 'productos.py'
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/Sistema_Pedidos
           pytest --cov=Sistema_Pedidos --cov-report=xml Sistema_Pedidos/tests/
 
       # 7. Seguridad (Solo carpeta Sistema_Pedidos)
