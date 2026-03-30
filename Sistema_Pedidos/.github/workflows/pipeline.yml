@@ -1,0 +1,44 @@
+name: CI - Sistema Pedidos
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      # 2. Configurar Python
+      - name: Configurar entorno Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      # 3. Instalar dependencias
+      - name: Instalar dependencias
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 4. Linter
+      - name: Ejecutar linter (flake8)
+        run: flake8 . --max-line-length=88
+
+      # 5. Tests unitarios
+      - name: Ejecutar tests unitarios
+        run: pytest tests/
+
+      # 6. Cobertura
+      - name: Medir cobertura de tests
+        run: pytest --cov=. --cov-report=xml
+
+      # 7. Seguridad
+      - name: Análisis de seguridad (bandit)
+        run: bandit -r . -ll
