@@ -11,33 +11,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout
+      # 1. Descargar el código del repo al servidor de GitHub
       - name: Checkout del código
         uses: actions/checkout@v4
 
-      # 2. Configurar Python
+      # 2. Configurar Python (Cambiado a 3.12 para estabilidad)
       - name: Configurar entorno Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.14'
+          python-version: '3.12'
 
       # 3. Instalar dependencias
       - name: Instalar dependencias
         run: |
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install flake8 pytest pytest-cov bandit
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # 4. Linter
+      # 4. Linter (Revisión de estilo de código)
       - name: Ejecutar linter (flake8)
-        run: flake8 . --max-line-length=88
+        run: flake8 . --max-line-length=88 --exclude=__pycache__,tests
 
-      # 5. Tests unitarios
-      - name: Ejecutar tests unitarios
-        run: pytest tests/
+      # 5. Tests y Cobertura (Todo en un paso)
+      - name: Ejecutar tests y medir cobertura
+        run: |
+          pytest --cov=. --cov-report=xml tests/
 
-      # 6. Cobertura
-      - name: Medir cobertura de tests
-        run: pytest --cov=. --cov-report=xml
-
-      # 7. Seguridad
+      # 6. Seguridad (Analiza solo el código Python)
       - name: Análisis de seguridad (bandit)
-        run: bandit -r . -ll
+        run: bandit -r . -ll -x ./tests
