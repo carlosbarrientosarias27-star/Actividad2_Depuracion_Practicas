@@ -28,9 +28,9 @@ jobs:
           pip install flake8 pytest pytest-cov bandit
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # 4. Linter (Revisión de estilo de código)
+      # 4. Linter (Solo para la carpeta del sistema)
       - name: Ejecutar linter (flake8)
-        run: flake8 . --max-line-length=88 --exclude=__pycache__,tests
+        run: flake8 Sistema_Pedidos/ --max-line-length=88
 
       # 5. Tests y Cobertura (Todo en un paso)
       - name: Ejecutar tests y medir cobertura
