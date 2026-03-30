@@ -25,7 +25,7 @@ def test_ejecutar_flujo_pedido_completo():
     inputs = [
         '1',        # Opción: Nuevo pedido
         'Carlos',   # Nombre del cliente
-        'cafe, te', # Productos
+        'cafe,te',  # Productos
         '3'         # Opción: Salir
     ]
     
