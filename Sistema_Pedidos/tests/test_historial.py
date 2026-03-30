@@ -4,7 +4,7 @@ from historial import guardar_pedido, obtener_todos, generar_estadisticas, _regi
 @pytest.fixture(autouse=True)
 def limpiar_historial():
     """
-    Fixture que se ejecuta automáticamente antes de cada test 
+    Fixture que se ejecuta automáticamente antes de cada test
     para vaciar el historial global y asegurar la independencia.
     """
     _registros.clear()
